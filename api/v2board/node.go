@@ -164,6 +164,9 @@ func (c *Client) GetNodeInfo(ctx context.Context) (node *NodeInfo, err error) {
 	case "shadowsocks":
 		node.Type = cm.Protocol
 		node.Security = 0
+	case "mieru":
+		node.Type = cm.Protocol
+		node.Security = cm.Tls
 	default:
 		return nil, fmt.Errorf("unsupport protocol: %s", cm.Protocol)
 	}

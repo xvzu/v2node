@@ -72,6 +72,15 @@ func (vc *V2Core) DelUsers(users []panel.UserInfo, tag string, _ *panel.NodeInfo
 	return nil
 }
 
+func (vc *V2Core) GetMieruTrafficSlice(tag string, _ int) ([]panel.UserTraffic, error) {
+	ms := vc.GetMieruServer(tag)
+	if ms == nil {
+		return nil, nil
+	}
+	traffic := ms.GetTraffic(tag)
+	return traffic, nil
+}
+
 func (vc *V2Core) GetUserTrafficSlice(tag string, mintraffic int) ([]panel.UserTraffic, error) {
 	trafficSlice := make([]panel.UserTraffic, 0)
 	vc.users.mapLock.RLock()
@@ -131,6 +140,12 @@ func (v *V2Core) AddUsers(p *AddUsersParams) (added int, err error) {
 		users = buildTuicUsers(p.Tag, p.Users)
 	case "anytls":
 		users = buildAnyTLSUsers(p.Tag, p.Users)
+	case "mieru":
+		ms := p.Vc.GetMieruServer(p.Tag)
+		if ms != nil {
+			ms.SetUsers(p.Users)
+		}
+		return len(p.Users), nil
 	default:
 		return 0, fmt.Errorf("unsupported node type: %s", p.NodeInfo.Type)
 	}

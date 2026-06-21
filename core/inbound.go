@@ -66,6 +66,8 @@ func buildInbound(nodeInfo *panel.NodeInfo, tag string) (*core.InboundHandlerCon
 		err = buildTuic(nodeInfo, in)
 	case "anytls":
 		err = buildAnyTLS(nodeInfo, in)
+	case "mieru":
+		return mieruInboundConfig(nodeInfo, tag)
 	default:
 		return nil, fmt.Errorf("unsupported node type: %s", nodeInfo.Type)
 	}
@@ -471,6 +473,10 @@ func buildTuic(nodeInfo *panel.NodeInfo, inbound *coreConf.InboundDetourConfig) 
 		return fmt.Errorf("marshal tuic settings error: %s", err)
 	}
 	return nil
+}
+
+func mieruInboundConfig(nodeInfo *panel.NodeInfo, tag string) (*core.InboundHandlerConfig, error) {
+	return nil, fmt.Errorf("mieru protocol does not use xray-core inbound")
 }
 
 func buildAnyTLS(nodeInfo *panel.NodeInfo, inbound *coreConf.InboundDetourConfig) error {

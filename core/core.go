@@ -23,6 +23,7 @@ type AddUsersParams struct {
 	Tag   string
 	Users []panel.UserInfo
 	*panel.NodeInfo
+	Vc *V2Core
 }
 
 type V2Core struct {

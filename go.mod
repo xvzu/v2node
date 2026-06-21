@@ -75,6 +75,7 @@ require (
 	github.com/cloudflare/circl v1.6.3 // indirect
 	github.com/dimchansky/utfbom v1.1.1 // indirect
 	github.com/dnsimple/dnsimple-go/v4 v4.0.0 // indirect
+	github.com/enfein/mieru/v3 v3.34.0 // indirect
 	github.com/exoscale/egoscale/v3 v3.1.24 // indirect
 	github.com/fatih/structs v1.1.0 // indirect
 	github.com/felixge/httpsnoop v1.0.4 // indirect
@@ -95,7 +96,7 @@ require (
 	github.com/golang-jwt/jwt/v4 v4.5.2 // indirect
 	github.com/golang-jwt/jwt/v5 v5.2.2 // indirect
 	github.com/golang/protobuf v1.5.4 // indirect
-	github.com/google/btree v1.1.2 // indirect
+	github.com/google/btree v1.1.3 // indirect
 	github.com/google/go-querystring v1.1.0 // indirect
 	github.com/google/s2a-go v0.1.9 // indirect
 	github.com/google/uuid v1.6.0 // indirect

@@ -128,6 +128,7 @@ func (c *Controller) nodeInfoMonitor(ctx context.Context) (err error) {
 			Tag:      c.tag,
 			NodeInfo: c.info,
 			Users:    added,
+			Vc:       c.server,
 		})
 		if err != nil {
 			log.WithFields(log.Fields{

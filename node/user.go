@@ -15,7 +15,12 @@ func (c *Controller) reportUserTrafficTask(ctx context.Context) (err error) {
 		reportmin = c.info.Common.BaseConfig.NodeReportMinTraffic
 		devicemin = c.info.Common.BaseConfig.DeviceOnlineMinTraffic
 	}
-	userTraffic, _ := c.server.GetUserTrafficSlice(c.tag, reportmin)
+	var userTraffic []panel.UserTraffic
+	if c.info.Type == "mieru" {
+		userTraffic, _ = c.server.GetMieruTrafficSlice(c.tag, reportmin)
+	} else {
+		userTraffic, _ = c.server.GetUserTrafficSlice(c.tag, reportmin)
+	}
 	if len(userTraffic) > 0 {
 		err = c.apiClient.ReportUserTraffic(ctx, userTraffic)
 		if err != nil {
@@ -32,6 +37,9 @@ func (c *Controller) reportUserTrafficTask(ctx context.Context) (err error) {
 		}
 	}
 
+	if c.limiter == nil {
+		return nil
+	}
 	if onlineDevice, err := c.limiter.GetOnlineDevice(); err != nil {
 		log.WithFields(log.Fields{
 			"tag": c.tag,

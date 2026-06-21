@@ -66,9 +66,11 @@ func (c *Controller) Start(x *core.V2Core) error {
 	c.tag = node.Tag
 
 	// add limiter
-	l := limiter.AddLimiter(c.info.Type, c.tag, c.userList, c.aliveMap)
-	c.limiter = l
-	if node.Security == panel.Tls {
+	if c.info.Type != "mieru" {
+		l := limiter.AddLimiter(c.info.Type, c.tag, c.userList, c.aliveMap)
+		c.limiter = l
+	}
+	if node.Security == panel.Tls && c.info.Type != "mieru" {
 		err = c.requestCert()
 		if err != nil {
 			return fmt.Errorf("request cert error: %s", err)
@@ -83,6 +85,7 @@ func (c *Controller) Start(x *core.V2Core) error {
 		Tag:      c.tag,
 		Users:    c.userList,
 		NodeInfo: node,
+		Vc:       c.server,
 	})
 	if err != nil {
 		return fmt.Errorf("add users error: %s", err)
