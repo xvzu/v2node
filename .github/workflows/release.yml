@@ -113,13 +113,14 @@ jobs:
         run: |
           go mod download
       - name: Get release version
-        if: ${{ github.event_name == 'release' }}
+        id: get_version
         run: |
-          echo "version=$(echo $GITHUB_REF | cut -d / -f 3)" >> $GITHUB_ENV
-      - name: Get other version
-        if: ${{ github.event_name != 'release' }}
-        run: |
-          echo "version=${{ github.sha }}" >> $GITHUB_ENV
+          VERSION="${GITHUB_REF_NAME}"
+          if [ -z "$VERSION" ]; then
+            VERSION="${{ github.sha }}"
+          fi
+          echo "version=$VERSION" >> $GITHUB_ENV
+          echo "Version: $VERSION"
       - name: Build v2node
         run: |
           echo "version: $version"
@@ -171,10 +172,8 @@ jobs:
           path: |
             ./v2node-${{ steps.get_filename.outputs.ASSET_NAME }}/*
       - name: Upload binaries to release
-        uses: svenstaro/upload-release-action@v2
         if: github.event_name == 'release'
+        uses: softprops/action-gh-release@v2
         with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: ./v2node-${{ steps.get_filename.outputs.ASSET_NAME }}.zip*
-          tag: ${{ github.ref }}
-          file_glob: true
+          files: ./v2node-${{ steps.get_filename.outputs.ASSET_NAME }}.zip*
+          tag_name: ${{ github.ref_name }}
