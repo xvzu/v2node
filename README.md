@@ -9,7 +9,7 @@
 ### 一键安装
 
 ```bash
-wget -N https://raw.githubusercontent.com/wyx2685/v2node/master/script/install.sh && bash install.sh
+wget -N https://raw.githubusercontent.com/xvzu/v2node/master/script/install.sh && bash install.sh
 ```
 
 ### 手动编译
