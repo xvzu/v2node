@@ -14,5 +14,7 @@ example/cert
 ./vscode
 output/*
 .idea/*
+v2node
+build_assets/*
 new.sh
 quick_update.sh
